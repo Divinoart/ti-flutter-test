@@ -7,8 +7,12 @@ import '../section/section_row.dart';
 import 'appointments_item.dart';
 
 class Appointments extends StatelessWidget {
+  final GlobalKey four;
+  final GlobalKey five;
   const Appointments({
     Key? key,
+    required this.four,
+    required this.five,
     this.verticalLayout = false,
   }) : super(key: key);
 
@@ -19,6 +23,7 @@ class Appointments extends StatelessWidget {
     return Section(
       name: context.localizations.upcoming_appointments,
       showViewAll: true,
+      globalKey: five,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,6 +69,7 @@ class Appointments extends StatelessWidget {
         cta: "Join virtual visit",
         image: Image.asset('images/house.png').image,
         condensed: verticalLayout,
+        globalKey: four,
       ),
       AppointmentsItem(
         date: DateTime.now(),

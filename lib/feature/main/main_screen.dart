@@ -7,8 +7,10 @@ import 'package:chrconnecthpdraft/feature/main/bloc/main_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../home/home_screen_alternative.dart';
+import '../widgets/showcase/showcase_widget.dart';
 
 class MainScreen extends StatefulWidget {
   static String routeName = '/';
@@ -21,6 +23,17 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late MainBloc _mainBloc;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _one = GlobalKey();
+  final GlobalKey _two = GlobalKey();
+  final GlobalKey _three = GlobalKey();
+  final GlobalKey _four = GlobalKey();
+  final GlobalKey _five = GlobalKey();
+  final GlobalKey _six = GlobalKey();
+  final GlobalKey _seven = GlobalKey();
+  final GlobalKey _eight = GlobalKey();
+  final GlobalKey _nine = GlobalKey();
+  final GlobalKey _ten = GlobalKey();
 
   @override
   void initState() {
@@ -30,172 +43,217 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        foregroundColor: Theme.of(context).colorScheme.onBackground,
-        iconTheme: context.theme.iconTheme,
-        elevation: 0,
-        scrolledUnderElevation: 2,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: Image.asset('images/bell-24.png'),
-            tooltip: context.localizations.show_notifications,
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              child: SizedBox.shrink(),
-            ),
-            ListTile(
-              title: Text(
-                'Default',
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall
-                    ?.copyWith(fontWeight: FontWeight.w400),
-              ),
-              trailing: BlocBuilder<MainBloc, MainState>(
-                bloc: _mainBloc,
-                buildWhen: (previous, current) =>
-                    previous.defaultVersion != current.defaultVersion,
-                builder: (context, state) {
-                  return Switch(
-                    value: _mainBloc.state.defaultVersion,
-                    onChanged: (bool value) => _mainBloc.add(
-                      MainEvent.changeDashboard(defaultVersion: value),
-                    ),
-                  );
-                },
-              ),
-              onTap: () => _mainBloc.add(
-                MainEvent.changeDashboard(
-                    fullDashboard: !_mainBloc.state.defaultVersion),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BlocBuilder<MainBloc, MainState>(
-        bloc: _mainBloc,
-        buildWhen: (previous, current) => previous.index != current.index,
-        builder: (context, state) {
-          return BottomNavigationBar(
-            selectedItemColor: Theme.of(context).colorScheme.primary,
-            unselectedItemColor: Theme.of(context).colorScheme.outline,
-            selectedLabelStyle: context.textTheme.labelMedium,
-            unselectedLabelStyle: context.textTheme.labelMedium,
-            items: [
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'images/home-24.png',
-                  color: state.index == 0 ? context.colorScheme.primary : null,
-                ),
-                label: context.localizations.home,
-                backgroundColor: Theme.of(context).colorScheme.background,
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'images/schedule-24.png',
-                  color: state.index == 1 ? context.colorScheme.primary : null,
-                ),
-                label: context.localizations.appointments,
-                backgroundColor: Theme.of(context).colorScheme.background,
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'images/inbox-24.png',
-                  color: state.index == 2 ? context.colorScheme.primary : null,
-                ),
-                label: context.localizations.inbox,
-                backgroundColor: Theme.of(context).colorScheme.background,
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'images/money-24.png',
-                  color: state.index == 3 ? context.colorScheme.primary : null,
-                ),
-                label: context.localizations.billing,
-                backgroundColor: Theme.of(context).colorScheme.background,
+    return ShowCaseBuilder(
+      scrollController: _scrollController,
+      builder: (guideContext) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            foregroundColor: Theme.of(context).colorScheme.onBackground,
+            iconTheme: context.theme.iconTheme,
+            elevation: 0,
+            scrolledUnderElevation: 2,
+            actions: <Widget>[
+              IconButton(
+                onPressed: () {},
+                icon: Image.asset('images/bell-24.png'),
+                tooltip: context.localizations.show_notifications,
               ),
             ],
-            currentIndex: _mainBloc.state.index,
-            onTap: (index) =>
+          ),
+          drawer: Drawer(
+            child: ListView(
+              children: [
+                const DrawerHeader(
+                  child: SizedBox.shrink(),
+                ),
+                ListTile(
+                  title: Text(
+                    'Default',
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall
+                        ?.copyWith(fontWeight: FontWeight.w400),
+                  ),
+                  trailing: BlocBuilder<MainBloc, MainState>(
+                    bloc: _mainBloc,
+                    buildWhen: (previous, current) =>
+                    previous.defaultVersion != current.defaultVersion,
+                    builder: (context, state) {
+                      return Switch(
+                        value: _mainBloc.state.defaultVersion,
+                        onChanged: (bool value) => _mainBloc.add(
+                          MainEvent.changeDashboard(defaultVersion: value),
+                        ),
+                      );
+                    },
+                  ),
+                  onTap: () => _mainBloc.add(
+                    MainEvent.changeDashboard(
+                        fullDashboard: !_mainBloc.state.defaultVersion),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      ShowCaseWidget.of(guideContext).startShowCase([_one, _two, _three, _four, _five, _six, _seven, _eight, _nine, _ten]);
+                    },
+                    style: Theme.of(context).textButtonTheme.style?.copyWith(
+                      backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.background),
+                      foregroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
+                    ),
+                    child: const Text('Show onBoarding'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          bottomNavigationBar: BlocBuilder<MainBloc, MainState>(
+            bloc: _mainBloc,
+            buildWhen: (previous, current) => previous.index != current.index,
+            builder: (context, state) {
+              return BottomNavigationBar(
+                selectedItemColor: Theme.of(context).colorScheme.primary,
+                unselectedItemColor: Theme.of(context).colorScheme.outline,
+                selectedLabelStyle: context.textTheme.labelMedium,
+                unselectedLabelStyle: context.textTheme.labelMedium,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Showcase(
+                      key: _seven,
+                      title: "Home Page",
+                      description: "Click here to access you account home page",
+                      targetPadding: const EdgeInsets.all(15),
+                      targetBorderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Image.asset(
+                        'images/home-24.png',
+                        color: state.index == 0 ? context.colorScheme.primary : null,
+                      ),
+                    ),
+                    label: context.localizations.home,
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Showcase(
+                      key: _eight,
+                      title: "Appointments",
+                      description: "Click here to view upcoming appointments",
+                      targetPadding: const EdgeInsets.all(15),
+                      targetBorderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Image.asset(
+                        'images/schedule-24.png',
+                        color: state.index == 1 ? context.colorScheme.primary : null,
+                      ),
+                    ),
+                    label: context.localizations.appointments,
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Showcase(
+                      key: _nine,
+                      title: "Inbox",
+                      description: "Navigate to this tab to view your unread messages",
+                      targetPadding: const EdgeInsets.all(15),
+                      targetBorderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Image.asset(
+                        'images/inbox-24.png',
+                        color: state.index == 2 ? context.colorScheme.primary : null,
+                      ),
+                    ),
+                    label: context.localizations.inbox,
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Showcase(
+                      key: _ten,
+                      title: "Billing",
+                      description: "View and manage your billing here",
+                      targetPadding: const EdgeInsets.all(15),
+                      targetBorderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Image.asset(
+                        'images/money-24.png',
+                        color: state.index == 3 ? context.colorScheme.primary : null,
+                      ),
+                    ),
+                    label: context.localizations.billing,
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                  ),
+                ],
+                currentIndex: _mainBloc.state.index,
+                onTap: (index) =>
                 {_mainBloc.add(MainEvent.changePage(index: index))},
-          );
-        },
-      ),
-      floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: ExpandableFab(
-        type: ExpandableFabType.up,
-        distance: 64,
-        expandedFabSize: ExpandableFabSize.regular,
-        closeButtonStyle: ExpandableFabCloseButtonStyle(
-          child: const Icon(Icons.add_rounded),
-          backgroundColor: context.colorScheme.primary,
-        ),
-        backgroundColor: context.colorScheme.primary,
-        child: const Icon(Icons.add_rounded),
-        children: [
-          FloatingActionButton.extended(
-            icon: Image.asset(
-              'images/hospital.png',
-              color: context.colorScheme.onPrimary,
-            ),
-            label: Text(
-              context.localizations.find_new_clinic,
-              style: context.textTheme.displaySmall
-                  ?.copyWith(color: context.colorScheme.onPrimary),
+              );
+            },
+          ),
+          floatingActionButtonLocation: ExpandableFab.location,
+          floatingActionButton: ExpandableFab(
+            type: ExpandableFabType.up,
+            distance: 64,
+            expandedFabSize: ExpandableFabSize.regular,
+            closeButtonStyle: ExpandableFabCloseButtonStyle(
+              child: const Icon(Icons.add_rounded),
+              backgroundColor: context.colorScheme.primary,
             ),
             backgroundColor: context.colorScheme.primary,
-            onPressed: () {},
+            child: const Icon(Icons.add_rounded),
+            children: [
+              FloatingActionButton.extended(
+                icon: Image.asset(
+                  'images/hospital.png',
+                  color: context.colorScheme.onPrimary,
+                ),
+                label: Text(
+                  context.localizations.find_new_clinic,
+                  style: context.textTheme.displaySmall
+                      ?.copyWith(color: context.colorScheme.onPrimary),
+                ),
+                backgroundColor: context.colorScheme.primary,
+                onPressed: () {},
+              ),
+              FloatingActionButton.extended(
+                icon: Image.asset(
+                  'images/edit-20.png',
+                  color: context.colorScheme.onPrimary,
+                ),
+                label: Text(
+                  context.localizations.new_message,
+                  style: context.textTheme.displaySmall
+                      ?.copyWith(color: context.colorScheme.onPrimary),
+                ),
+                backgroundColor: context.colorScheme.primary,
+                onPressed: () {},
+              ),
+              FloatingActionButton.extended(
+                icon: const Icon(Icons.add_rounded),
+                label: Text(
+                  context.localizations.book_appointment,
+                  style: context.textTheme.displaySmall
+                      ?.copyWith(color: context.colorScheme.onPrimary),
+                ),
+                backgroundColor: context.colorScheme.primary,
+                onPressed: () {},
+              ),
+            ],
           ),
-          FloatingActionButton.extended(
-            icon: Image.asset(
-              'images/edit-20.png',
-              color: context.colorScheme.onPrimary,
+          body: SafeArea(
+            child: BlocBuilder<MainBloc, MainState>(
+              bloc: _mainBloc,
+              builder: (context, state) {
+                return _showPage();
+              },
             ),
-            label: Text(
-              context.localizations.new_message,
-              style: context.textTheme.displaySmall
-                  ?.copyWith(color: context.colorScheme.onPrimary),
-            ),
-            backgroundColor: context.colorScheme.primary,
-            onPressed: () {},
           ),
-          FloatingActionButton.extended(
-            icon: const Icon(Icons.add_rounded),
-            label: Text(
-              context.localizations.book_appointment,
-              style: context.textTheme.displaySmall
-                  ?.copyWith(color: context.colorScheme.onPrimary),
-            ),
-            backgroundColor: context.colorScheme.primary,
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: BlocBuilder<MainBloc, MainState>(
-          bloc: _mainBloc,
-          builder: (context, state) {
-            return _showPage();
-          },
-        ),
-      ),
+        );
+      },
     );
   }
 
   Widget _showPage() {
     switch (_mainBloc.state.index) {
       case 0:
-        return _mainBloc.state.defaultVersion
-            ? const HomeScreen()
-            : const HomeScreenAlternative();
+        return _mainBloc.state.defaultVersion ? HomeScreen(one: _one, two: _two, three: _three, four: _four, five: _five, six: _six, scrollController: _scrollController) : HomeScreenAlternative(one: _one, two: _two, three: _three, four: _four, five: _five, six: _six, scrollController: _scrollController);
       case 1:
         return const AppointmentScreen();
       case 2:

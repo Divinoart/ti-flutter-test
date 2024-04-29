@@ -3,6 +3,8 @@ import 'package:chrconnecthpdraft/feature/home/components/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../widgets/showcase/showcase.dart';
+
 class AppointmentsItem extends StatelessWidget {
   const AppointmentsItem({
     Key? key,
@@ -16,6 +18,7 @@ class AppointmentsItem extends StatelessWidget {
     this.calendarSize = const Size(64, 64),
     this.imageRadius = 12,
     this.condensed = false,
+    this.globalKey,
   }) : super(key: key);
 
   final String title;
@@ -28,6 +31,7 @@ class AppointmentsItem extends StatelessWidget {
   final double imageRadius;
   final Size calendarSize;
   final bool condensed;
+  final GlobalKey? globalKey;
 
   @override
   Widget build(BuildContext context) =>
@@ -229,10 +233,22 @@ class AppointmentsItem extends StatelessWidget {
                     ),
               ),
               const Spacer(),
-              TextButton(
-                onPressed: () {},
-                child: Text(cta),
-              ),
+              if (globalKey != null)...[
+                ShowCase(
+                  globalKey: globalKey!,
+                  title: "There are direct links to your virtual appointments.",
+                  desc: "Continue",
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(cta),
+                  ),
+                ),
+              ] else ...[
+                TextButton(
+                  onPressed: () {},
+                  child: Text(cta),
+                ),
+              ],
               const SizedBox(width: 16),
             ],
           ),
